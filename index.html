@@ -50,6 +50,18 @@
             <img src="icons/navegador.ico" class="icon-img" alt="Internet Explorer">
             <span>Internet Explorer</span>
         </div>
+        <div class="desktop-icon" ondblclick="openCalculator()" onclick="selectIcon(this)">
+            <img src="icons/disco local.ico" class="icon-img" alt="Calculadora">
+            <span>Calculadora</span>
+        </div>
+        <div class="desktop-icon" ondblclick="openPaint()" onclick="selectIcon(this)">
+            <img src="icons/centro de owo.ico" class="icon-img" alt="Paint Femboy">
+            <span>Paint Femboy</span>
+        </div>
+        <div class="desktop-icon" ondblclick="openTerminal()" onclick="selectIcon(this)">
+            <img src="icons/administrador.ico" class="icon-img" alt="Terminal">
+            <span>Terminal</span>
+        </div>
         <div class="window" id="equipo-window" style="top: 70px; left: 130px; width: 680px; height: 460px;">
             <div class="glass-reflection"></div>
             <div class="title-bar" id="equipo-window-tb">
@@ -757,6 +769,27 @@
                     <div class="start-item-icon"><img src="icons/papelera.ico" alt="Papelera"></div>
                     <div class="start-item-text">
                         <span class="main">Papelera</span>
+                    </div>
+                </div>
+                <div class="start-item" onclick="openCalculator(); closeStartMenu()">
+                    <div class="start-item-icon"><img src="icons/disco local.ico" alt="Calculadora"></div>
+                    <div class="start-item-text">
+                        <span class="main">Calculadora</span>
+                        <span class="sub">Operaciones matemáticas</span>
+                    </div>
+                </div>
+                <div class="start-item" onclick="openPaint(); closeStartMenu()">
+                    <div class="start-item-icon"><img src="icons/centro de owo.ico" alt="Paint Femboy"></div>
+                    <div class="start-item-text">
+                        <span class="main">Paint Femboy</span>
+                        <span class="sub">Editor de imágenes</span>
+                    </div>
+                </div>
+                <div class="start-item" onclick="openTerminal(); closeStartMenu()">
+                    <div class="start-item-icon"><img src="icons/administrador.ico" alt="Terminal"></div>
+                    <div class="start-item-text">
+                        <span class="main">Terminal</span>
+                        <span class="sub">Línea de comandos</span>
                     </div>
                 </div>
             </div>
