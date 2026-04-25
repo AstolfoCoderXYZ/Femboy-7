@@ -4,11 +4,24 @@ const winState = {};
 function getWin(id) { return document.getElementById(id); }
 
 function setTaskbarState(id, state) {
-    const map = { 'equipo-window': 'ti-equipo', 'papelera-window': 'ti-papelera', 'about-window': 'ti-about', 'owo-window': 'ti-owo', 'taskmgr-window': 'ti-taskmgr', 'personalize-window': 'ti-personalize', 'player-window': 'ti-player', 'messenger-window': 'ti-messenger' };
+    const map = { 
+        'equipo-window': 'ti-equipo', 
+        'papelera-window': 'ti-papelera', 
+        'about-window': 'ti-about', 
+        'owo-window': 'ti-owo', 
+        'taskmgr-window': 'ti-taskmgr', 
+        'personalize-window': 'ti-personalize', 
+        'player-window': 'ti-player', 
+        'messenger-window': 'ti-messenger',
+        'calculator-window': 'ti-calculator',
+        'paint-window': 'ti-paint',
+        'terminal-window': 'ti-terminal'
+    };
     const btn = document.getElementById(map[id]);
     if (btn) {
         btn.classList.toggle('active-window', state);
-        if (id === 'papelera-window' || id === 'personalize-window' || id === 'player-window') {
+        if (id === 'papelera-window' || id === 'personalize-window' || id === 'player-window' || 
+            id === 'calculator-window' || id === 'paint-window' || id === 'terminal-window') {
             btn.style.display = state ? 'flex' : 'none';
         }
     }
@@ -158,7 +171,43 @@ function makeDraggable(win) {
     win.addEventListener('mousedown', () => focusWindow(win));
 }
 
+// Hacer arrastrables todas las ventanas existentes
 document.querySelectorAll('.window').forEach(makeDraggable);
+
+// Función para crear nuevas ventanas dinámicamente (para apps como Calculadora, Paint, etc.)
+function createAppWindow(id, title, icon, contentHTML, width = 400, height = 350) {
+    // Verificar si ya existe
+    if (document.getElementById(id)) {
+        openWindow(id);
+        return;
+    }
+    
+    const desktop = document.getElementById('desktop');
+    const win = document.createElement('div');
+    win.className = 'window';
+    win.id = id;
+    win.style.cssText = `top: ${100 + Math.random() * 50}px; left: ${150 + Math.random() * 50}px; width: ${width}px; height: ${height}px;`;
+    
+    win.innerHTML = `
+        <div class="glass-reflection"></div>
+        <div class="title-bar" id="${id}-tb">
+            <div class="title-bar-text">
+                <img src="${icon}" style="width: 14px; height: 14px; object-fit: contain;">
+                <span style="margin-left: 5px;">${title}</span>
+            </div>
+            <div class="title-bar-controls">
+                <button class="minimize" onclick="minimizeWindow('${id}')" title="Minimizar"></button>
+                <button class="maximize" onclick="maximizeWindow('${id}')" title="Maximizar"></button>
+                <button class="close-btn" onclick="closeWindow('${id}')" title="Cerrar"></button>
+            </div>
+        </div>
+        <div class="window-content">${contentHTML}</div>
+    `;
+    
+    desktop.appendChild(win);
+    makeDraggable(win);
+    openWindow(id);
+}
 
 function selectIcon(el) {
     document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
@@ -313,7 +362,23 @@ document.getElementById('preview-close-btn').addEventListener('click', () => {
 
 function unlockDesktop() {
     const lockScreen = document.getElementById('lock-screen');
+    const passInput = document.getElementById('lock-pass');
     const audio = document.getElementById('unlock-sound');
+    
+    // Validación de contraseña ( UwU o vacía para demo)
+    const enteredPass = passInput ? passInput.value : '';
+    const validPasswords = [' UwU', 'uwu', 'UwU', ''];
+    
+    if (!validPasswords.includes(enteredPass)) {
+        // Contraseña incorrecta - sonido de error y animación
+        showToastMsg('Error de inicio de sesión', 'Contraseña incorrecta n.n 💔', 'icons/bloqueo.ico');
+        passInput.value = '';
+        passInput.focus();
+        lockScreen.classList.add('shake');
+        setTimeout(() => lockScreen.classList.remove('shake'), 500);
+        return;
+    }
+    
     if (audio) {
         audio.currentTime = 0;
         audio.volume = 1.0;
@@ -771,6 +836,307 @@ function createStars() {
             star.remove();
         }
     }, duration * 1000);
+}
+
+// Funciones del Administrador de Tareas
+let selectedProcessRow = null;
+
+function switchTmTab(tabName) {
+    // Ocultar todas las vistas
+    document.querySelectorAll('.tm-main').forEach(view => {
+        view.style.display = 'none';
+    });
+    
+    // Remover clase active de todas las tabs
+    document.querySelectorAll('.tm-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Mostrar vista seleccionada
+    const selectedView = document.getElementById(`tm-view-${tabName}`);
+    if (selectedView) {
+        selectedView.style.display = 'block';
+    }
+    
+    // Activar tab correspondiente
+    const activeTab = document.querySelector(`.tm-tab[onclick="switchTmTab('${tabName}')"]`);
+    if (activeTab) {
+        activeTab.classList.add('active');
+    }
+    
+    // Si es la vista de rendimiento, actualizar valores
+    if (tabName === 'performance') {
+        updatePerformanceView();
+    }
+}
+
+function endProcess() {
+    if (!selectedProcessRow) {
+        showToastMsg('Administrador de Tareas', 'Selecciona un proceso para finalizar n.n 💕', 'icons/administrador.ico');
+        return;
+    }
+    
+    const processName = selectedProcessRow.querySelector('div:first-child').textContent;
+    const row = selectedProcessRow;
+    
+    // Animación de eliminación
+    row.style.transition = 'all 0.3s ease';
+    row.style.background = '#ffcccc';
+    row.style.transform = 'translateX(100%)';
+    row.style.opacity = '0';
+    
+    setTimeout(() => {
+        row.remove();
+        selectedProcessRow = null;
+        
+        // Actualizar contador de procesos
+        const count = document.querySelectorAll('#tm-tbody-processes .tm-row').length;
+        document.querySelector('.tm-status-item').textContent = `Procesos: ${count}`;
+        
+        showToastMsg('Proceso finalizado', `${processName} ha sido cerrado ✨`, 'icons/administrador.ico');
+    }, 300);
+}
+
+function updatePerformanceView() {
+    const cpu = Math.round(20 + Math.random() * 45);
+    const ram = Math.round(38 + Math.random() * 25);
+    
+    document.getElementById('perf-cpu').textContent = cpu + '%';
+    document.getElementById('perf-ram').textContent = ram + '%';
+    document.getElementById('perf-cpu-bar').style.width = cpu + '%';
+    document.getElementById('perf-ram-bar').style.width = ram + '%';
+}
+
+// Agregar selección de filas en el administrador de tareas
+document.addEventListener('DOMContentLoaded', function() {
+    // Hacer seleccionables las filas de procesos
+    document.addEventListener('click', function(e) {
+        const row = e.target.closest('.tm-row');
+        if (row && row.parentElement.id === 'tm-tbody-processes') {
+            // Remover selección previa
+            document.querySelectorAll('#tm-tbody-processes .tm-row').forEach(r => {
+                r.classList.remove('selected');
+            });
+            // Seleccionar nueva fila
+            row.classList.add('selected');
+            selectedProcessRow = row;
+        }
+    });
+});
+
+// Funciones para nuevas aplicaciones
+
+// Calculadora
+function openCalculator() {
+    const calcHTML = `
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; padding: 10px; background: #f0f0f0; height: 100%;">
+            <input type="text" id="calc-display" readonly style="grid-column: span 4; height: 40px; font-size: 24px; text-align: right; padding: 5px; border: 2px solid #ccc; border-radius: 4px; background: white;">
+            <button onclick="calcInput('C')" style="height: 45px; font-size: 18px; background: #ff6b6b; color: white; border: none; border-radius: 4px; cursor: pointer;">C</button>
+            <button onclick="calcInput('(')" style="height: 45px; font-size: 18px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer;">(</button>
+            <button onclick="calcInput(')')" style="height: 45px; font-size: 18px; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer;">)</button>
+            <button onclick="calcInput('/')" style="height: 45px; font-size: 18px; background: #ffa500; color: white; border: none; border-radius: 4px; cursor: pointer;">÷</button>
+            <button onclick="calcInput('7')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">7</button>
+            <button onclick="calcInput('8')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">8</button>
+            <button onclick="calcInput('9')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">9</button>
+            <button onclick="calcInput('*')" style="height: 45px; font-size: 18px; background: #ffa500; color: white; border: none; border-radius: 4px; cursor: pointer;">×</button>
+            <button onclick="calcInput('4')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">4</button>
+            <button onclick="calcInput('5')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">5</button>
+            <button onclick="calcInput('6')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">6</button>
+            <button onclick="calcInput('-')" style="height: 45px; font-size: 18px; background: #ffa500; color: white; border: none; border-radius: 4px; cursor: pointer;">−</button>
+            <button onclick="calcInput('1')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">1</button>
+            <button onclick="calcInput('2')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">2</button>
+            <button onclick="calcInput('3')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">3</button>
+            <button onclick="calcInput('+')" style="height: 45px; font-size: 18px; background: #ffa500; color: white; border: none; border-radius: 4px; cursor: pointer;">+</button>
+            <button onclick="calcInput('0')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; grid-column: span 2;">0</button>
+            <button onclick="calcInput('.')" style="height: 45px; font-size: 18px; background: white; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">.</button>
+            <button onclick="calcResult()" style="height: 45px; font-size: 18px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">=</button>
+        </div>
+    `;
+    createAppWindow('calculator-window', 'Calculadora', 'icons/disco local.ico', calcHTML, 320, 420);
+}
+
+let calcExpression = '';
+
+function calcInput(val) {
+    const display = document.getElementById('calc-display');
+    if (val === 'C') {
+        calcExpression = '';
+        display.value = '';
+    } else {
+        calcExpression += val;
+        display.value = calcExpression;
+    }
+}
+
+function calcResult() {
+    try {
+        const result = eval(calcExpression);
+        document.getElementById('calc-display').value = result;
+        calcExpression = result.toString();
+    } catch (e) {
+        document.getElementById('calc-display').value = 'Error n.n 💕';
+        calcExpression = '';
+    }
+}
+
+// Paint básico
+function openPaint() {
+    const paintHTML = `
+        <div style="display: flex; height: 100%;">
+            <div style="width: 60px; background: #f0f0f0; padding: 5px; display: flex; flex-direction: column; gap: 5px; border-right: 1px solid #ccc;">
+                <button onclick="setBrushColor('#000000')" style="width: 40px; height: 25px; background: #000; border: 2px solid #999;" title="Negro"></button>
+                <button onclick="setBrushColor('#ff0000')" style="width: 40px; height: 25px; background: #f00; border: 2px solid #999;" title="Rojo"></button>
+                <button onclick="setBrushColor('#00ff00')" style="width: 40px; height: 25px; background: #0f0; border: 2px solid #999;" title="Verde"></button>
+                <button onclick="setBrushColor('#0000ff')" style="width: 40px; height: 25px; background: #00f; border: 2px solid #999;" title="Azul"></button>
+                <button onclick="setBrushColor('#ffff00')" style="width: 40px; height: 25px; background: #ff0; border: 2px solid #999;" title="Amarillo"></button>
+                <button onclick="setBrushColor('#ff69b4')" style="width: 40px; height: 25px; background: #ff69b4; border: 2px solid #999;" title="Rosa"></button>
+                <button onclick="clearCanvas()" style="margin-top: 10px; font-size: 11px; padding: 5px;" title="Limpiar">🗑️ Limpiar</button>
+            </div>
+            <div style="flex-grow: 1; background: #fff; position: relative;">
+                <canvas id="paint-canvas" style="cursor: crosshair;"></canvas>
+            </div>
+        </div>
+    `;
+    createAppWindow('paint-window', 'Paint Femboy', 'icons/centro de owo.ico', paintHTML, 550, 450);
+    
+    setTimeout(() => {
+        const canvas = document.getElementById('paint-canvas');
+        if (canvas) {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth - 60;
+            canvas.height = container.clientHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            
+            let painting = false;
+            
+            function startPaint(e) {
+                painting = true;
+                ctx.beginPath();
+                ctx.moveTo(e.offsetX, e.offsetY);
+            }
+            
+            function paint(e) {
+                if (!painting) return;
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+            
+            function stopPaint() {
+                painting = false;
+            }
+            
+            canvas.addEventListener('mousedown', startPaint);
+            canvas.addEventListener('mousemove', paint);
+            canvas.addEventListener('mouseup', stopPaint);
+            canvas.addEventListener('mouseout', stopPaint);
+        }
+    }, 100);
+}
+
+let currentColor = '#000000';
+
+function setBrushColor(color) {
+    currentColor = color;
+    const canvas = document.getElementById('paint-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.strokeStyle = color;
+    }
+}
+
+function clearCanvas() {
+    const canvas = document.getElementById('paint-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+}
+
+// Terminal falsa con comandos divertidos
+function openTerminal() {
+    const termHTML = `
+        <div style="background: #000; color: #0f0; font-family: 'Consolas', monospace; height: 100%; padding: 10px; overflow-y: auto;" id="terminal-content" onclick="document.getElementById('term-input').focus()">
+            <div>FemboyOS [Versión 6.9.80085]</div>
+            <div>(c) 2026 Nanno Corporation. Todos los derechos reservados.</div>
+            <br>
+            <div id="term-output">Escribe 'help' para ver los comandos disponibles OwO</div>
+            <div style="display: flex; margin-top: 5px;">
+                <span>C:\\Users\\Nanno></span>
+                <input type="text" id="term-input" style="flex-grow: 1; background: transparent; border: none; color: #0f0; margin-left: 5px; outline: none;" autofocus>
+            </div>
+        </div>
+    `;
+    createAppWindow('terminal-window', 'Terminal', 'icons/administrador.ico', termHTML, 600, 400);
+    
+    setTimeout(() => {
+        const input = document.getElementById('term-input');
+        if (input) {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    handleTerminalCommand(this.value);
+                    this.value = '';
+                }
+            });
+            input.focus();
+        }
+    }, 100);
+}
+
+const terminalCommands = {
+    'help': 'Comandos disponibles: help, owo, uwu, kawaii, fecha, cls, whoami, neko, gay',
+    'owo': '¡OwO! ¿Qué es esto? ¡Un comando UwU! ✨',
+    'uwu': 'UwU ~ Esto es muy kawaii n.n 💕',
+    'kawaii': '(≧◡≦) ♡ ¡Eres súper kawaii! 💖',
+    'fecha': new Date().toLocaleString(),
+    'cls': 'CLEAR',
+    'whoami': 'Nanno - Administrador supremo de la ternura 👑',
+    'neko': 'ฅ^•ﻌ•^ฅ ¡Nya~! 🐱',
+    'gay': '🏳️‍🌈 ¡El amor es amor! 💕✨',
+    'sudo': '⚠️ Acceso denegado. Necesitas más kawaii para usar sudo n.n',
+    'rm -rf': '💀 ¡¿Intentas borrar todo?! ¡Nooo! 🥺',
+    'matrix': '🟢 La matrix te saluda... sigue al conejo blanco 🐇',
+};
+
+function handleTerminalCommand(cmd) {
+    const output = document.getElementById('term-output');
+    const cmdLower = cmd.toLowerCase().trim();
+    
+    // Agregar comando al historial
+    const cmdLine = document.createElement('div');
+    cmdLine.textContent = `C:\\Users\\Nanno> ${cmd}`;
+    output.appendChild(cmdLine);
+    
+    // Procesar comando
+    let response = terminalCommands[cmdLower];
+    if (!response) {
+        if (cmdLower.startsWith('echo ')) {
+            response = cmd.substring(5);
+        } else if (cmdLower === '') {
+            response = null;
+        } else {
+            response = `'${cmd}' no se reconoce como un comando interno o externo.`;
+        }
+    }
+    
+    if (response && response !== 'CLEAR') {
+        const respLine = document.createElement('div');
+        respLine.style.color = '#0ff';
+        respLine.textContent = response;
+        output.appendChild(respLine);
+    } else if (response === 'CLEAR') {
+        output.innerHTML = '';
+    }
+    
+    // Auto-scroll
+    const termContent = document.getElementById('terminal-content');
+    termContent.scrollTop = termContent.scrollHeight;
 }
 
 renderNotes();

@@ -178,13 +178,13 @@
                     <div><u>A</u>yuda</div>
                 </div>
                 <div class="tm-tabs">
-                    <div class="tm-tab">Aplicaciones</div>
-                    <div class="tm-tab active">Procesos</div>
-                    <div class="tm-tab">Servicios</div>
-                    <div class="tm-tab">Rendimiento</div>
-                    <div class="tm-tab">Usuarios</div>
+                    <div class="tm-tab" onclick="switchTmTab('apps')">Aplicaciones</div>
+                    <div class="tm-tab active" onclick="switchTmTab('processes')" id="tm-tab-processes">Procesos</div>
+                    <div class="tm-tab" onclick="switchTmTab('services')">Servicios</div>
+                    <div class="tm-tab" onclick="switchTmTab('performance')">Rendimiento</div>
+                    <div class="tm-tab" onclick="switchTmTab('users')">Usuarios</div>
                 </div>
-                <div class="tm-main">
+                <div class="tm-main" id="tm-view-processes">
                     <div class="tm-thead">
                         <div style="width: 140px;">Nombre de imagen</div>
                         <div style="width: 90px;">Nombre de us...</div>
@@ -192,71 +192,71 @@
                         <div style="width: 80px; text-align: right;">Memoria (p...</div>
                         <div style="flex-grow: 1; padding-left: 10px;">Descripción</div>
                     </div>
-                    <div class="tm-tbody">
-                        <div class="tm-row">
+                    <div class="tm-tbody" id="tm-tbody-processes">
+                        <div class="tm-row" data-process="astolfo_sys.exe">
                             <div>astolfo_sys.exe</div>
                             <div>Nanno</div>
                             <div>02</div>
                             <div class="tm-mem">18,204 KB</div>
                             <div class="tm-desc">Núcleo de ternura</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="blahaj_service.exe">
                             <div>blahaj_service.exe</div>
                             <div>SYSTEM</div>
                             <div>00</div>
                             <div class="tm-mem">42,069 KB</div>
                             <div class="tm-desc">Soporte emocional</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="estrogen_mgr.exe">
                             <div>estrogen_mgr.exe</div>
                             <div>Nanno</div>
                             <div>04</div>
                             <div class="tm-mem">12,500 KB</div>
                             <div class="tm-desc">Monitor de hormonas</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="discord_kitten.exe">
                             <div>discord_kitten.exe</div>
                             <div>Nanno</div>
                             <div>00</div>
                             <div class="tm-mem">105,400 KB</div>
                             <div class="tm-desc">Discord App</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="thigh_highs.exe">
                             <div>thigh_highs.exe</div>
                             <div>SYSTEM</div>
                             <div>15</div>
                             <div class="tm-mem">8,000 KB</div>
                             <div class="tm-desc">Controlador de calentadores</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="osu!.exe">
                             <div>osu!.exe</div>
                             <div>Nanno</div>
                             <div>28</div>
                             <div class="tm-mem">450,230 KB</div>
                             <div class="tm-desc">osu!</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="skincare_routine.sys">
                             <div>skincare_routine.sys</div>
                             <div>SYSTEM</div>
                             <div>01</div>
                             <div class="tm-mem">2,400 KB</div>
                             <div class="tm-desc">Hidratación y cuidado</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="explorer.exe">
                             <div>explorer.exe</div>
                             <div>Nanno</div>
                             <div>02</div>
                             <div class="tm-mem">35,112 KB</div>
                             <div class="tm-desc">Explorador de Windows</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="dwm.exe">
                             <div>dwm.exe</div>
                             <div>SYSTEM</div>
                             <div>01</div>
                             <div class="tm-mem">22,104 KB</div>
                             <div class="tm-desc">Desktop Window Manager</div>
                         </div>
-                        <div class="tm-row">
+                        <div class="tm-row" data-process="taskmgr.exe">
                             <div>taskmgr.exe</div>
                             <div>Nanno</div>
                             <div>05</div>
@@ -265,12 +265,132 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Vista Aplicaciones -->
+                <div class="tm-main" id="tm-view-apps" style="display:none;">
+                    <div class="tm-thead">
+                        <div style="width: 200px;">Aplicación</div>
+                        <div style="flex-grow: 1;">Estado</div>
+                    </div>
+                    <div class="tm-tbody" id="tm-tbody-apps">
+                        <div class="tm-row" data-app="equipo-window">
+                            <div>Equipo</div>
+                            <div class="tm-desc">Ejecutándose</div>
+                        </div>
+                        <div class="tm-row" data-app="papelera-window">
+                            <div>Papelera de reciclaje</div>
+                            <div class="tm-desc">Ejecutándose</div>
+                        </div>
+                        <div class="tm-row" data-app="taskmgr-window">
+                            <div>Administrador de tareas</div>
+                            <div class="tm-desc">Ejecutándose</div>
+                        </div>
+                        <div class="tm-row" data-app="personalize-window">
+                            <div>Personalización</div>
+                            <div class="tm-desc">Ejecutándose</div>
+                        </div>
+                        <div class="tm-row" data-app="player-window">
+                            <div>Media Player</div>
+                            <div class="tm-desc">Ejecutándose</div>
+                        </div>
+                        <div class="tm-row" data-app="messenger-window">
+                            <div>Messenger</div>
+                            <div class="tm-desc">Ejecutándose</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vista Rendimiento -->
+                <div class="tm-main" id="tm-view-performance" style="display:none;">
+                    <div style="padding: 20px; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">📊</div>
+                        <h3 style="color: #666;">Rendimiento del Sistema</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                            <div style="background: linear-gradient(135deg, #e8f4ff, #d0e8ff); padding: 15px; border-radius: 8px;">
+                                <div style="font-weight: bold; color: #333;">CPU Usage</div>
+                                <div id="perf-cpu" style="font-size: 32px; color: #0066cc; margin: 10px 0;">0%</div>
+                                <div style="height: 8px; background: #ccc; border-radius: 4px; overflow: hidden;">
+                                    <div id="perf-cpu-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #0066cc, #00aaff); transition: width 0.3s;"></div>
+                                </div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #ffe8f0, #ffd0e0); padding: 15px; border-radius: 8px;">
+                                <div style="font-weight: bold; color: #333;">RAM Usage</div>
+                                <div id="perf-ram" style="font-size: 32px; color: #cc0066; margin: 10px 0;">0%</div>
+                                <div style="height: 8px; background: #ccc; border-radius: 4px; overflow: hidden;">
+                                    <div id="perf-ram-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #cc0066, #ff66aa); transition: width 0.3s;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; color: #888; font-size: 14px;">
+                            <p>✨ Sistema optimizado para máxima ternura ✨</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vista Servicios -->
+                <div class="tm-main" id="tm-view-services" style="display:none;">
+                    <div class="tm-thead">
+                        <div style="width: 180px;">Servicio</div>
+                        <div style="width: 100px;">Estado</div>
+                        <div style="width: 100px;">Tipo</div>
+                        <div style="flex-grow: 1;">Descripción</div>
+                    </div>
+                    <div class="tm-tbody">
+                        <div class="tm-row">
+                            <div>Aero Glass Manager</div>
+                            <div style="color: #00aa00;">● Ejecutando</div>
+                            <div>Automático</div>
+                            <div class="tm-desc">Gestión de efectos visuales Aero</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>Cute Sound Service</div>
+                            <div style="color: #00aa00;">● Ejecutando</div>
+                            <div>Automático</div>
+                            <div class="tm-desc">Sonidos kawaii del sistema</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>OwO Detection</div>
+                            <div style="color: #00aa00;">● Ejecutando</div>
+                            <div>Automático</div>
+                            <div class="tm-desc">Detección automática de OwO/UwU</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>Blahaj Support</div>
+                            <div style="color: #00aa00;">● Ejecutando</div>
+                            <title>Manual</title>
+                            <div class="tm-desc">Soporte de tiburones de peluche</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vista Usuarios -->
+                <div class="tm-main" id="tm-view-users" style="display:none;">
+                    <div style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(135deg, #f0f8ff, #e6f2ff); border-radius: 8px; margin-bottom: 15px;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #ffb6c1, #ff69b4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                            <div>
+                                <div style="font-weight: bold; font-size: 16px;">Nanno</div>
+                                <div style="color: #666; font-size: 13px;">Administrador</div>
+                            </div>
+                            <div style="margin-left: auto; color: #00aa00; font-size: 13px;">● Activo</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: #f5f5f5; border-radius: 8px; opacity: 0.6;">
+                            <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #ccc, #999); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">👤</div>
+                            <div>
+                                <div style="font-weight: bold; font-size: 16px;">Astolfo</div>
+                                <div style="color: #666; font-size: 13px;">Usuario estándar</div>
+                            </div>
+                            <div style="margin-left: auto; color: #888; font-size: 13px;">○ Inactivo</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="tm-bottom">
                     <div class="tm-bottom-left">
                         <input type="checkbox" id="tm-check"> <label for="tm-check">Mostrar procesos de todos los
                             usuarios</label>
                     </div>
-                    <button class="tm-end-btn">Finalizar proceso</button>
+                    <button class="tm-end-btn" onclick="endProcess()">Finalizar proceso</button>
                 </div>
                 <div class="tm-statusbar">
                     <div class="tm-status-item">Procesos: 69</div>
