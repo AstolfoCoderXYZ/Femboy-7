@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Vista — Escritorio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="icons/Astolfo.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+</head>
+
+<body>
+    <div id="lock-screen" class="lock-screen-container">
+        <div class="lock-content">
+            <div class="lock-avatar"><img src="icons/bloqueo.ico" alt="Avatar"></div>
+            <div class="lock-name">Nanno</div>
+            <div class="lock-locked">Bloqueado</div>
+            <div class="lock-input-group">
+                <input type="password" class="lock-input" id="lock-pass" placeholder="Contraseña">
+                <button class="lock-btn" onclick="unlockDesktop()">➔</button>
+            </div>
+            <div class="lock-switch">Cambiar de usuario</div>
+        </div>
+        <div class="lock-footer">
+            <button class="lock-power" title="Apagar el equipo"><span class="lock-power-icon">⏻</span></button>
+            <div class="lock-brand">
+                <span style="font-size:18px;">🏳️‍⚧️</span> Femboy 7 Ultimate
+            </div>
+        </div>
+    </div>
+
+    <audio id="unlock-sound" src="hlyxrw.mp3" preload="auto"></audio>
+    <div id="desktop" oncontextmenu="showContextMenu(event)">
+
+    
+        <div class="desktop-icon" ondblclick="openWindow('equipo-window')" onclick="selectIcon(this)">
+            <img src="icons/equipo.ico" class="icon-img" alt="Equipo">
+            <span>Equipo</span>
+        </div>
+        <div class="desktop-icon" ondblclick="openWindow('papelera-window')" onclick="selectIcon(this)">
+            <img src="icons/papelera.ico" class="icon-img" alt="Papelera">
+            <span>Papelera de reciclaje</span>
+        </div>
+        <div class="desktop-icon"
+            ondblclick="showToastMsg('Aviso', 'Programa no instalado n.n 🌸', 'icons/navegador.ico')"
+            onclick="selectIcon(this)">
+            <img src="icons/navegador.ico" class="icon-img" alt="Internet Explorer">
+            <span>Internet Explorer</span>
+        </div>
+        <div class="window" id="equipo-window" style="top: 70px; left: 130px; width: 680px; height: 460px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="equipo-window-tb">
+                <div class="title-bar-text">
+                    <img src="icons/equipo.ico" style="width: 14px; height: 14px; object-fit: contain;">
+                    <span style="margin-left: 5px;">Equipo</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('equipo-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('equipo-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('equipo-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="address-bar">
+                    <span class="address-arrow">▶</span>
+                    <span>Equipo</span>
+                </div>
+                <div class="toolbar">
+                    <div class="toolbar-btn">Organizar ▾</div>
+                    <div class="toolbar-btn">Propiedades del sistema</div>
+                    <div class="toolbar-sep"></div>
+                    <div class="toolbar-btn">Vista ▾</div>
+                </div>
+                <div class="main-content">
+                    <div class="sidebar">
+                        <div class="sidebar-section">Favoritos</div>
+                        <ul>
+                            <li class="sidebar-item active">🖥️ Escritorio</li>
+                            <li class="sidebar-item">⬇️ Descargas</li>
+                            <li class="sidebar-item">📋 Reciente</li>
+                        </ul>
+                        <div class="sidebar-section">Bibliotecas</div>
+                        <ul>
+                            <li class="sidebar-item">📄 Documentos</li>
+                            <li class="sidebar-item">🎵 Música</li>
+                            <li class="sidebar-item">🖼️ Imágenes</li>
+                            <li class="sidebar-item">🎬 Vídeos</li>
+                        </ul>
+                        <div class="sidebar-section">Equipo</div>
+                        <ul>
+                            <li class="sidebar-item">💾 Disco (C:)</li>
+                        </ul>
+                    </div>
+                    <div class="files">
+                        <h3>Unidades de disco duro (1)</h3>
+                        <div class="drive" tabindex="0">
+                            <img src="icons/disco local.ico"
+                                style="width: 48px; height: 48px; object-fit: contain; margin-right: 15px;"
+                                alt="Disco Local">
+                            <div class="drive-info">
+                                <div class="drive-name">Disco local (C:)</div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 45%;"></div>
+                                </div>
+                                <div class="free-space">150 GB disponibles de 500 GB</div>
+                            </div>
+                        </div>
+                        <h3>Dispositivos con almacenamiento extraíble (1)</h3>
+                        <div class="drive" tabindex="0">
+                            <div style="font-size: 42px; margin-right: 15px; line-height:1;">💿</div>
+                            <div class="drive-info">
+                                <div class="drive-name">Unidad DVD-RW (D:)</div>
+                                <div class="free-space">Unidad vacía</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <span>2 elementos</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="context-menu" class="context-menu" style="display:none; position:absolute; z-index:10000;">
+            <div class="menu-item" style="color:#888;">Ver</div>
+            <div class="menu-item" style="color:#888;">Ordenar por</div>
+            <div class="menu-item" onclick="location.reload()">Actualizar</div>
+            <div class="separator"></div>
+            <div class="menu-item" style="color:#888;">Nuevo</div>
+            <div class="separator"></div>
+            <div class="menu-item" style="font-weight:bold;"
+                onclick="openWindow('personalize-window'); hideContextMenu()">Personalizar</div>
+        </div>
+
+        <div class="window" id="papelera-window" style="top: 110px; left: 220px; width: 540px; height: 400px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="papelera-window-tb">
+                <div class="title-bar-text">
+                    <img src="icons/papelera.ico"
+                        style="width:14px; height:14px; margin-right:5px; object-fit:contain; margin-top:-2px;" alt="">
+                    <span>Papelera de reciclaje</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('papelera-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('papelera-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('papelera-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content"
+                style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#fff;">
+                <img src="icons/papelera.ico" style="width:64px; height:64px; margin-bottom:15px; opacity:0.8;" alt="">
+                <h3 style="color:#666; margin:0; font-weight:400; font-size:18px;">La papelera está vacía n.n ✨</h3>
+            </div>
+        </div>
+
+        <div class="window" id="taskmgr-window" style="top: 60px; left: 180px; width: 600px; height: 500px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="taskmgr-window-tb">
+                <div class="title-bar-text">
+                    <img src="icons/administrador.ico"
+                        style="width:14px; height:14px; margin-right:5px; object-fit:contain; margin-top:-2px;" alt="">
+                    <span>Administrador de tareas de Femboy</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('taskmgr-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('taskmgr-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('taskmgr-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content taskmgr-content">
+                <div class="tm-menubar">
+                    <div><u>A</u>rchivo</div>
+                    <div><u>O</u>pciones</div>
+                    <div><u>V</u>er</div>
+                    <div><u>A</u>yuda</div>
+                </div>
+                <div class="tm-tabs">
+                    <div class="tm-tab">Aplicaciones</div>
+                    <div class="tm-tab active">Procesos</div>
+                    <div class="tm-tab">Servicios</div>
+                    <div class="tm-tab">Rendimiento</div>
+                    <div class="tm-tab">Usuarios</div>
+                </div>
+                <div class="tm-main">
+                    <div class="tm-thead">
+                        <div style="width: 140px;">Nombre de imagen</div>
+                        <div style="width: 90px;">Nombre de us...</div>
+                        <div style="width: 50px;">CPU</div>
+                        <div style="width: 80px; text-align: right;">Memoria (p...</div>
+                        <div style="flex-grow: 1; padding-left: 10px;">Descripción</div>
+                    </div>
+                    <div class="tm-tbody">
+                        <div class="tm-row">
+                            <div>astolfo_sys.exe</div>
+                            <div>Nanno</div>
+                            <div>02</div>
+                            <div class="tm-mem">18,204 KB</div>
+                            <div class="tm-desc">Núcleo de ternura</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>blahaj_service.exe</div>
+                            <div>SYSTEM</div>
+                            <div>00</div>
+                            <div class="tm-mem">42,069 KB</div>
+                            <div class="tm-desc">Soporte emocional</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>estrogen_mgr.exe</div>
+                            <div>Nanno</div>
+                            <div>04</div>
+                            <div class="tm-mem">12,500 KB</div>
+                            <div class="tm-desc">Monitor de hormonas</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>discord_kitten.exe</div>
+                            <div>Nanno</div>
+                            <div>00</div>
+                            <div class="tm-mem">105,400 KB</div>
+                            <div class="tm-desc">Discord App</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>thigh_highs.exe</div>
+                            <div>SYSTEM</div>
+                            <div>15</div>
+                            <div class="tm-mem">8,000 KB</div>
+                            <div class="tm-desc">Controlador de calentadores</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>osu!.exe</div>
+                            <div>Nanno</div>
+                            <div>28</div>
+                            <div class="tm-mem">450,230 KB</div>
+                            <div class="tm-desc">osu!</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>skincare_routine.sys</div>
+                            <div>SYSTEM</div>
+                            <div>01</div>
+                            <div class="tm-mem">2,400 KB</div>
+                            <div class="tm-desc">Hidratación y cuidado</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>explorer.exe</div>
+                            <div>Nanno</div>
+                            <div>02</div>
+                            <div class="tm-mem">35,112 KB</div>
+                            <div class="tm-desc">Explorador de Windows</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>dwm.exe</div>
+                            <div>SYSTEM</div>
+                            <div>01</div>
+                            <div class="tm-mem">22,104 KB</div>
+                            <div class="tm-desc">Desktop Window Manager</div>
+                        </div>
+                        <div class="tm-row">
+                            <div>taskmgr.exe</div>
+                            <div>Nanno</div>
+                            <div>05</div>
+                            <div class="tm-mem">14,320 KB</div>
+                            <div class="tm-desc">Administrador de tareas</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tm-bottom">
+                    <div class="tm-bottom-left">
+                        <input type="checkbox" id="tm-check"> <label for="tm-check">Mostrar procesos de todos los
+                            usuarios</label>
+                    </div>
+                    <button class="tm-end-btn">Finalizar proceso</button>
+                </div>
+                <div class="tm-statusbar">
+                    <div class="tm-status-item">Procesos: 69</div>
+                    <div class="tm-status-item" id="tm-cpu">Uso de CPU: 0%</div>
+                    <div class="tm-status-item" id="tm-ram">Memoria física: 0%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="personalize-window" style="top: 100px; left: 160px; width: 620px; height: 420px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="personalize-window-tb">
+                <div class="title-bar-text">
+                    <span style="font-size:14px; margin-right:5px; margin-top:-2px;">🎨</span>
+                    <span>Personalización</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('personalize-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('personalize-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('personalize-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content pz-content">
+                <div class="pz-sidebar">
+                    <div class="pz-sidebar-item active">Temas Aero</div>
+                    <div class="pz-sidebar-item">Fondo de escritorio</div>
+                    <div class="pz-sidebar-item">Color de ventana</div>
+                    <div class="pz-sidebar-item">Sonidos</div>
+                </div>
+                <div class="pz-main">
+                    <h2 class="pz-heading">Cambiar los efectos visuales y los sonidos del equipo</h2>
+                    <p class="pz-desc">Haz clic en un color de ventana para cambiar la estética del tema Aero Glass.</p>
+
+                    <div class="pz-color-grid">
+                        <div class="pz-color-box pz-color-default" onclick="changeAeroColor('default')"
+                            title="Sky (Defecto)"></div>
+                        <div class="pz-color-box pz-color-pink" onclick="changeAeroColor('pink')" title="Pink UwU">
+                        </div>
+                        <div class="pz-color-box pz-color-purple" onclick="changeAeroColor('purple')" title="Lavender">
+                        </div>
+                        <div class="pz-color-box pz-color-dark" onclick="changeAeroColor('dark')" title="Midnight">
+                        </div>
+                        <div class="pz-color-box pz-color-mint" onclick="changeAeroColor('mint')" title="Mint Fresh">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; border-top: 1px solid #c9d8e6; padding-top: 20px;">
+                        <h3 class="pz-subheading" style="margin-bottom:15px; color:#1a3a7a;">Fondos de pantalla
+                            (Simulado)</h3>
+                        <div class="pz-bg-preview"
+                            onclick="showToastMsg('¡El cambio de fondos requiere más imágenes en el servidor!')">
+                            <img src="icons/fondo de pantalla.jpg" alt="Wallpaper">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="owo-window" style="top: 90px; left: 160px; width: 680px; height: 480px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="owo-window-tb">
+                <div class="title-bar-text">
+                    <img src="icons/centro de owo.ico"
+                        style="width:14px; height:14px; margin-right:5px; object-fit:contain; margin-top:-2px;" alt="">
+                    <span>Centro de OwO</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('owo-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('owo-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('owo-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content owo-content">
+                <div class="owo-sidebar">
+                    <div class="owo-sidebar-title">Centro de OwO</div>
+                    <ul>
+                        <li>🛡️ UwU Defender</li>
+                        <li>🔥 Firewall de Cuddles</li>
+                        <li>✨ Actualiz. de estilo</li>
+                        <li>🌐 Opciones de Internet</li>
+                    </ul>
+                    <div class="owo-sidebar-bottom">
+                        <div class="owo-sidebar-title" style="margin-top:20px;">Ver también</div>
+                        <ul>
+                            <li>🧴 Skin Care Routine</li>
+                            <li>💧 Hidratación</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="owo-main">
+                    <h2 class="owo-heading">Estado del sistema</h2>
+                    <p class="owo-desc">Para ayudar a proteger tu equipo, asegúrate de que los componentes de seguridad
+                        y estilo estén En orden o Activos.</p>
+
+                    <div class="owo-blocks">
+                        <div class="owo-block owo-green">
+                            <div class="owo-block-title">Protección contra virus (UwU Defender)</div>
+                            <div class="owo-block-status">Activo ✅</div>
+                        </div>
+                        <div class="owo-block owo-green">
+                            <div class="owo-block-title">Firewall de cuddles</div>
+                            <div class="owo-block-status">Encendido ✅</div>
+                        </div>
+                        <div class="owo-block owo-yellow">
+                            <div class="owo-block-title">Actualizaciones de estilo</div>
+                            <div class="owo-block-status">Necesita atención ⚠️</div>
+                        </div>
+                        <div class="owo-block owo-pink">
+                            <div class="owo-block-title">Niveles de glucosa</div>
+                            <div class="owo-block-status">Óptimos 🍭</div>
+                        </div>
+                    </div>
+
+                    <h3 class="owo-subheading">Mensajes recientes:</h3>
+                    <ul class="owo-messages">
+                        <li>💬 Nuevo dispositivo 'twink_phone' conectado a tu red</li>
+                        <li>👗 Windows ha detectado que tu outfit no hace match. ¿Quieres buscar ayuda online?</li>
+                        <li>💧 Recordatorio: Hidratar skin care routine</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="window" id="player-window" style="top: 200px; left: 400px; width: 450px; height: 250px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="player-window-tb">
+                <div class="title-bar-text">
+                    <img src="icons/sonido.ico"
+                        style="width:14px; height:14px; margin-right:5px; object-fit:contain; margin-top:-2px;" alt="">
+                    <span>Femboy Media Player</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('player-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('player-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('player-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content player-content" id="player-dropzone" style="position:relative;">
+                <div class="player-drag-overlay" id="player-drag-overlay"
+                    style="display:none; position:absolute; inset:0; background:rgba(255,182,193,0.8); z-index:10; border-radius:inherit; align-items:center; justify-content:center; flex-direction:column; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.3); backdrop-filter:blur(5px);">
+                    <span style="font-size:40px;">🎵</span>
+                    <h3>Suelta tu canción aquí</h3>
+                </div>
+                <div class="player-top">
+                    <div class="player-cover">
+                        <img id="player-cover-img" src="icons/Astolfo.ico" alt="Album Art">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-track" id="player-track">Hlyxrw Theme</div>
+                        <div class="player-artist" id="player-artist">Femboy System</div>
+                        <div class="player-time"><span id="player-curr">0:00</span> / <span id="player-dur">0:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="player-progress-bar" id="player-progress-bar">
+                    <div class="player-progress-fill" id="player-progress-fill"></div>
+                </div>
+                <div class="player-controls">
+                    <button class="player-btn prev-btn" title="Anterior">⏮</button>
+                    <button class="player-btn play-btn" id="player-play-btn" title="Reproducir">▶</button>
+                    <button class="player-btn next-btn" title="Siguiente">⏭</button>
+                </div>
+                <audio id="player-audio" src="hlyxrw.mp3" preload="metadata"></audio>
+            </div>
+        </div>
+
+        <div class="window" id="messenger-window" style="top: 150px; left: 600px; width: 350px; height: 500px;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="messenger-window-tb">
+                <div class="title-bar-text">
+                    <span style="font-size:14px; margin-right:5px; margin-top:-2px;">💬</span>
+                    <span>Femboy Messenger</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="minimize" onclick="minimizeWindow('messenger-window')" title="Minimizar"></button>
+                    <button class="maximize" onclick="maximizeWindow('messenger-window')" title="Maximizar"></button>
+                    <button class="close-btn" onclick="closeWindow('messenger-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content messenger-content">
+                <div class="msg-header">
+                    <div class="msg-avatar">
+                        <img src="icons/Astolfo.ico" alt="Avatar">
+                    </div>
+                    <div class="msg-user-info">
+                        <div class="msg-name">Nanno <span class="msg-status">(Conectado)</span></div>
+                        <div class="msg-mood">"Programando cositas bonitas 💖"</div>
+                    </div>
+                </div>
+                <div class="msg-main">
+                    <div class="msg-contact-list" id="msg-contact-list">
+                        <div class="msg-group-title">Amigos (1/2)</div>
+                        <div class="msg-contact online" onclick="openChat('Astolfo')">
+                            <img src="icons/Astolfo.ico" alt="Astolfo">
+                            <div class="msg-contact-info">
+                                <div class="msg-contact-name">Astolfo</div>
+                                <div class="msg-contact-sub">Esperando headpats...</div>
+                            </div>
+                        </div>
+                        <div class="msg-contact offline" onclick="openChat('Blahaj')">
+                            <img src="icons/boton inicio.ico" alt="Blahaj">
+                            <div class="msg-contact-info">
+                                <div class="msg-contact-name">Blåhaj</div>
+                                <div class="msg-contact-sub">Desconectado</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg-chat-area" id="msg-chat-area" style="display:none;">
+                        <div class="msg-chat-header">
+                            <button class="msg-back-btn" onclick="closeChat()">Back</button>
+                            <span id="msg-chat-title">Chat con Astolfo</span>
+                        </div>
+                        <div class="msg-history" id="msg-history">
+                        </div>
+                        <div class="msg-input-area">
+                            <input type="text" id="msg-input" placeholder="Escribe un mensaje...">
+                            <button id="msg-send-btn">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window about-win" id="about-window"
+            style="top: 140px; left: 380px; width: 430px; height: auto; resize: none;">
+            <div class="glass-reflection"></div>
+            <div class="title-bar" id="about-window-tb">
+                <div class="title-bar-text">
+                    <span style="font-size:13px;">🏳️‍⚧️</span>
+                    <span style="margin-left: 5px;">Acerca de Femboy 7</span>
+                </div>
+                <div class="title-bar-controls">
+                    <button class="close-btn" onclick="closeWindow('about-window')" title="Cerrar"></button>
+                </div>
+            </div>
+            <div class="window-content about-content">
+                <div class="about-hero">
+                    <div class="about-logo">🏳️‍⚧️</div>
+                    <div class="about-hero-text">
+                        <span class="about-brand">Femboy</span><sup class="about-sup">®</sup>
+                        <span class="about-edition">7 Ultimate</span>
+                    </div>
+                </div>
+                <div class="about-body">
+                    <p class="about-line"><strong>Nanno Systems</strong></p>
+                    <p class="about-line">Versión 6.9 (compilación 80085)</p>
+                    <p class="about-line">Copyright © 2026 Nanno Corporation. Todos los derechos reservados.</p>
+                    <p class="about-desc">El sistema operativo Femboy 7 Ultimate y la interfaz de usuario están
+                        protegidos por las leyes de marca registrada y otros derechos de propiedad intelectual actuales
+                        y pendientes en los Estados Unidos y otros países.</p>
+                    <p class="about-desc" style="color: #c060c0; font-weight: 600;">Dominio rentado con amor por nanno
+                        💜</p>
+                    <div class="about-divider"></div>
+                    <p class="about-desc">La licencia de este producto se concede de acuerdo con los<br>
+                        <a href="#" class="about-link">Términos de licencia del software de Nanno Systems</a> a:
+                    </p>
+                    <p class="about-user">Nanno</p>
+                </div>
+                <div class="about-footer">
+                    <button class="about-ok" onclick="closeWindow('about-window')">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="context-menu" class="context-menu">
+        <div class="ctx-item" onclick="hideContextMenu()">⊞ Vista</div>
+        <div class="ctx-item" onclick="hideContextMenu()">⇅ Ordenar por</div>
+        <div class="ctx-item" onclick="hideContextMenu()">↻ Actualizar</div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item" onclick="hideContextMenu()">⊕ Nuevo</div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item" onclick="hideContextMenu()">🎨 Personalizar…</div>
+        <div class="ctx-item" onclick="hideContextMenu()">🖥️ Resolución de pantalla</div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item" onclick="hideContextMenu()">⚙️ Propiedades</div>
+        <div class="ctx-separator"></div>
+        <div class="ctx-item" onclick="openWindow('about-window'); hideContextMenu()">🏳️‍⚧️ Acerca de Femboy 7…</div>
+    </div>
+
+    <div class="sidebar-panel" id="gadget-sidebar">
+        <div class="gadget">
+            <div class="gadget-title">🕐 Reloj</div>
+            <div class="gadget-clock">
+                <div class="clock-face" id="clock-face">
+                    <div class="hand hour-hand" id="hour-hand"></div>
+                    <div class="hand minute-hand" id="minute-hand"></div>
+                    <div class="hand second-hand" id="second-hand"></div>
+                    <div class="clock-center"></div>
+                </div>
+                <div class="clock-digital" id="gadget-digital-time">12:00:00</div>
+            </div>
+        </div>
+        <div class="gadget">
+            <div class="gadget-title">📊 Rendimiento</div>
+            <div class="gadget-meter">
+                <div class="meter-label">
+                    <span>CPU</span><span id="cpu-val">0%</span>
+                </div>
+                <div class="meter-bar">
+                    <div class="meter-fill cpu-fill" id="cpu-fill"></div>
+                </div>
+                <div class="meter-label">
+                    <span>RAM</span><span id="ram-val">0%</span>
+                </div>
+                <div class="meter-bar">
+                    <div class="meter-fill ram-fill" id="ram-fill"></div>
+                </div>
+            </div>
+        </div>
+        <div class="gadget">
+            <div class="gadget-title">📡 Red</div>
+            <div class="gadget-net">
+                <div class="net-status online">● Conectado</div>
+                <div class="net-detail">WiFi: TwinkTower_Ext_5G</div>
+                <div class="net-detail">Velocidad: 54 Mbps</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sticky-notes-container"></div>
+
+    <div class="screensaver" id="screensaver"></div>
+
+    <div class="toast" id="toast">
+        <img src="icons/equipo.ico" style="width: 24px; height: 24px; object-fit: contain; flex-shrink:0;" alt="">
+        <div class="toast-body">
+            <strong>Bienvenida, Nanno</strong>
+            <div>Windows Vista está listo.</div>
+        </div>
+        <button class="toast-close" onclick="closeToast()">✕</button>
+    </div>
+
+    <div class="start-menu" id="start-menu">
+        <div class="start-menu-left">
+            <div class="start-menu-user-header">
+                <div class="start-user-avatar"><img src="icons/Astolfo.ico"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="User"></div>
+                <span class="start-user-name">Nanno</span>
+            </div>
+            <div class="start-menu-left-items">
+                <div class="start-item"
+                    onclick="showToastMsg('Aviso', 'Programa no instalado n.n 🌸', 'icons/navegador.ico'); closeStartMenu()">
+                    <div class="start-item-icon"><img src="icons/navegador.ico" alt="IE"></div>
+                    <div class="start-item-text">
+                        <span class="main">Internet Explorer</span>
+                        <span class="sub">Navegador web</span>
+                    </div>
+                </div>
+                <div class="start-item" onclick="createNewStickyNote(); closeStartMenu()">
+                    <div class="start-item-icon"><span style="font-size:28px;">🟨</span></div>
+                    <div class="start-item-text">
+                        <span class="main">Sticky Notes</span>
+                        <span class="sub">Crear nota rápida</span>
+                    </div>
+                </div>
+                <div class="start-item" onclick="openWindow('equipo-window'); closeStartMenu()">
+                    <div class="start-item-icon"><img src="icons/equipo.ico" alt="Equipo"></div>
+                    <div class="start-item-text">
+                        <span class="main">Mi Equipo</span>
+                    </div>
+                </div>
+                <div class="start-item" onclick="closeStartMenu()">
+                    <div class="start-item-icon"><img src="icons/papelera.ico" alt="Papelera"></div>
+                    <div class="start-item-text">
+                        <span class="main">Papelera</span>
+                    </div>
+                </div>
+            </div>
+            <div class="start-separator-line"></div>
+            <div class="all-programs" onclick="hideContextMenu()">Todos los programas <span class="ap-arrow">▶</span>
+            </div>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Buscar programas y archivos" id="start-search">
+            </div>
+        </div>
+        <div class="start-menu-right">
+            <ul>
+                <li>Documentos</li>
+                <li>Imágenes</li>
+                <li>Música</li>
+                <li onclick="openWindow('player-window'); closeStartMenu();"><img src="icons/sonido.ico"
+                        style="width:16px; height:16px; margin-right:5px; vertical-align:middle;"> Femboy Media Player
+                </li>
+                <li onclick="openWindow('messenger-window'); closeStartMenu();"><span
+                        style="font-size:16px; margin-right:5px; vertical-align:middle;">💬</span> Femboy Messenger</li>
+                <div class="separator"></div>
+                <li>Juegos</li>
+                <li>Equipo</li>
+                <div class="separator"></div>
+                <li>Panel de control</li>
+                <li>Dispositivos e impresoras</li>
+                <li>Programas predeterminados</li>
+                <li>Ayuda y soporte técnico</li>
+                <div class="separator"></div>
+                <li onclick="openWindow('taskmgr-window'); closeStartMenu();"><img src="icons/administrador.ico"
+                        style="width:16px; height:16px; margin-right:5px; vertical-align:middle;"> Administrador de
+                    tareas</li>
+                <li onclick="openWindow('owo-window'); closeStartMenu();"><img src="icons/centro de owo.ico"
+                        style="width:16px; height:16px; margin-right:5px; vertical-align:middle;"> Centro de OwO</li>
+                <li onclick="openWindow('about-window'); closeStartMenu();">🏳️‍⚧️ Acerca de Femboy 7</li>
+            </ul>
+            <div class="separator"></div>
+            <div class="shutdown-row">
+                <div class="shutdown-btn" title="Bloquear el equipo" onclick="lockDesktop(); closeStartMenu();">
+                    <span class="shutdown-icon">⏻</span> Bloquear
+                </div>
+                <div class="shutdown-arrow-btn" title="Opciones">▶</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <button class="start-btn" id="start-btn" title="Inicio"></button>
+        <div class="taskbar-icons">
+            <div class="taskbar-icon pinned" id="ti-equipo" onmouseenter="showPreview('equipo-window', 'ti-equipo')"
+                onmouseleave="hidePreview()" onclick="toggleWindow('equipo-window')">
+                <img src="icons/equipo.ico" class="taskbar-item" alt="Mi Equipo">
+                <div class="taskbar-label">Equipo</div>
+            </div>
+            <div class="taskbar-icon" id="ti-papelera" style="display:none;"
+                onmouseenter="showPreview('papelera-window', 'ti-papelera')" onmouseleave="hidePreview()"
+                onclick="toggleWindow('papelera-window')">
+                <img src="icons/papelera.ico" class="taskbar-item" alt="Papelera">
+                <div class="taskbar-label">Papelera</div>
+            </div>
+            <div class="taskbar-icon pinned" id="ti-owo" onmouseenter="showPreview('owo-window', 'ti-owo')"
+                onmouseleave="hidePreview()" onclick="toggleWindow('owo-window')">
+                <img src="icons/centro de owo.ico" class="taskbar-item" alt="OwO">
+                <div class="taskbar-label">OwO</div>
+            </div>
+            <div class="taskbar-icon pinned" id="ti-taskmgr" onmouseenter="showPreview('taskmgr-window', 'ti-taskmgr')"
+                onmouseleave="hidePreview()" onclick="toggleWindow('taskmgr-window')">
+                <img src="icons/administrador.ico" class="taskbar-item" alt="Administrador de tareas">
+                <div class="taskbar-label">Administrador de tareas</div>
+            </div>
+            <div class="taskbar-icon pinned" id="ti-notes" onclick="createNewStickyNote()">
+                <span class="taskbar-item"
+                    style="font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;">🟨</span>
+                <div class="taskbar-label">Sticky Notes</div>
+            </div>
+            <div class="taskbar-icon" id="ti-personalize" style="display:none;"
+                onmouseenter="showPreview('personalize-window', 'ti-personalize')" onmouseleave="hidePreview()"
+                onclick="toggleWindow('personalize-window')">
+                <span class="taskbar-item"
+                    style="font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;">🎨</span>
+                <div class="taskbar-label">Personalización</div>
+            </div>
+            <div class="taskbar-icon pinned" id="ti-about" onmouseenter="showPreview('about-window', 'ti-about')"
+                onmouseleave="hidePreview()" onclick="toggleWindow('about-window')">
+                <span class="taskbar-item"
+                    style="font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;">🏳️‍⚧️</span>
+                <div class="taskbar-label">Acerca de</div>
+            </div>
+            <div class="taskbar-icon" id="ti-player" style="display:none;"
+                onmouseenter="showPreview('player-window', 'ti-player')" onmouseleave="hidePreview()"
+                onclick="toggleWindow('player-window')">
+                <img src="icons/sonido.ico" class="taskbar-item" alt="Reproductor de Música">
+                <div class="taskbar-label">Femboy Media Player</div>
+            </div>
+            <div class="taskbar-icon pinned" id="ti-messenger"
+                onmouseenter="showPreview('messenger-window', 'ti-messenger')" onmouseleave="hidePreview()"
+                onclick="toggleWindow('messenger-window')">
+                <span class="taskbar-item"
+                    style="font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;">💬</span>
+                <div class="taskbar-label">Messenger</div>
+            </div>
+        </div>
+        <div class="system-tray">
+            <div class="tray-group">
+                <img src="icons/bateria.ico" class="tray-icon-img" alt="Bateria" title="Batería: 100%">
+                <img src="icons/wifi.ico" class="tray-icon-img" alt="WiFi" title="Red: TwinkTower_Ext_5G">
+                <img src="icons/sonido.ico" class="tray-icon-img" alt="Sonido" title="Volumen: 80%">
+            </div>
+            <div class="time-date" id="clock" title="Fecha y hora">
+                <div id="time">12:00 p.m.</div>
+                <div id="date">01/01/2009</div>
+            </div>
+            <div class="show-desktop" onclick="toggleDesktop()" title="Mostrar escritorio"></div>
+        </div>
+    </div>
+
+    <div class="taskbar-preview" id="taskbar-preview">
+        <div class="preview-title" id="preview-title">Ventana</div>
+        <div class="preview-thumb" id="preview-thumb"></div>
+        <button class="preview-close" id="preview-close-btn">✕</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
