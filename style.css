@@ -1299,6 +1299,17 @@ html {
     transform: scale(1.03);
 }
 
+/* Animación de error para contraseña incorrecta */
+.lock-screen-container.shake {
+    animation: shakeError 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shakeError {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
 .lock-content {
     display: flex;
     flex-direction: column;
@@ -1700,6 +1711,7 @@ html {
     border-bottom: 1px solid #f9f9f9;
     color: #000;
     cursor: default;
+    transition: all 0.2s ease;
 }
 
 .tm-row:nth-child(even) {
@@ -1708,6 +1720,11 @@ html {
 
 .tm-row:hover {
     background: #d9ebf9;
+}
+
+.tm-row.selected {
+    background: #cce8ff !important;
+    outline: 1px solid #99d1ff;
 }
 
 .tm-row>div {
