@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Página no encontrada ~ OwO</title>
+    <link rel="icon" type="image/x-icon" href="icons/Astolfo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=M PLUS Rounded 1c:wght@400;700;900&family=Patrick+Hand&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --rosa: #ffb7d5;
+            --rosa-fuerte: #ff8fbe;
+            --lavanda: #cdb4f6;
+            --cielo: #bfe3ff;
+            --crema: #fff6fa;
+            --tinta: #6b4a6e;
+            --celeste-aula: #dff3ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'M PLUS Rounded 1c', 'Patrick Hand', sans-serif;
+            color: var(--tinta);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: linear-gradient(180deg, #ffeaf4 0%, #f3e8ff 45%, #e3f4ff 100%);
+            position: relative;
+        }
+
+        /* ====== Decoración flotante ====== */
+        .floating {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: flotar 6s ease-in-out infinite;
+            filter: drop-shadow(0 4px 6px rgba(255, 143, 190, .25));
+        }
+
+        @keyframes flotar {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-4deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(5deg);
+            }
+        }
+
+        .sakura {
+            position: fixed;
+            top: -5vh;
+            z-index: 2;
+            pointer-events: none;
+            animation: caer linear infinite;
+            opacity: .85;
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(50vh) translateX(6vw) rotate(200deg);
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(-4vw) rotate(400deg);
+            }
+        }
+
+        /* ====== Header tipo pizarra ====== */
+        header {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 40px 20px 10px;
+        }
+
+        .badge-clase {
+            display: inline-block;
+            background: #fff;
+            border: 3px dashed var(--rosa-fuerte);
+            border-radius: 999px;
+            padding: 8px 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--rosa-fuerte);
+            box-shadow: 0 6px 0 rgba(255, 143, 190, .25);
+            animation: wobble 3s ease-in-out infinite;
+        }
+
+        @keyframes wobble {
+
+            0%,
+            100% {
+                transform: rotate(-2deg);
+            }
+
+            50% {
+                transform: rotate(2deg);
+            }
+        }
+
+        h1.error-code {
+            font-size: clamp(90px, 22vw, 240px);
+            font-weight: 900;
+            line-height: 1;
+            margin-top: 10px;
+            background: linear-gradient(180deg, var(--rosa-fuerte), var(--lavanda) 60%, #7cc7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 6px 0 #ffffff) drop-shadow(0 12px 18px rgba(205, 180, 246, .5));
+            user-select: none;
+        }
+
+        h1.error-code span {
+            display: inline-block;
+            animation: saltar 1.6s ease-in-out infinite;
+        }
+
+        h1.error-code span:nth-child(2) {
+            animation-delay: .2s;
+        }
+
+        h1.error-code span:nth-child(3) {
+            animation-delay: .4s;
+        }
+
+        @keyframes saltar {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0);
+            }
+
+            30% {
+                transform: translateY(-16px) rotate(-4deg);
+            }
+
+            60% {
+                transform: translateY(0) rotate(3deg);
+            }
+        }
+
+        .titulo-pagina {
+            font-size: clamp(22px, 4vw, 34px);
+            font-weight: 900;
+            margin-top: 6px;
+        }
+
+        .subtitulo {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(16px, 2.5vw, 21px);
+            max-width: 620px;
+            margin: 10px auto 0;
+            line-height: 1.5;
+            color: #8a6a8d;
+        }
+
+        /* ====== Escena principal ====== */
+        main {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            gap: 30px;
+            padding: 40px 24px 20px;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        /* Personaje (ASTRO-chan dibujada con CSS/SVG) */
+        .escena-personaje {
+            flex: 1 1 340px;
+            max-width: 430px;
+            background: rgba(255, 255, 255, .72);
+            backdrop-filter: blur(6px);
+            border: 3px solid #fff;
+            border-radius: 28px;
+            box-shadow: 0 14px 34px rgba(205, 180, 246, .35), inset 0 0 0 6px rgba(255, 183, 213, .25);
+            padding: 26px 20px 18px;
+            text-align: center;
+            position: relative;
+        }
+
+        .escena-personaje::before {
+            content: "♪";
+            position: absolute;
+            top: 16px;
+            right: 26px;
+            font-size: 26px;
+            color: var(--rosa-fuerte);
+            animation: flotar 3.5s ease-in-out infinite;
+        }
+
+        .escena-personaje::after {
+            content: "♫";
+            position: absolute;
+            top: 44px;
+            left: 24px;
+            font-size: 20px;
+            color: var(--lavanda);
+            animation: flotar 4.2s ease-in-out infinite reverse;
+        }
+
+        .avatar {
+            width: min(260px, 70vw);
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            animation: balanceo 4s ease-in-out infinite;
+        }
+
+        @keyframes balanceo {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(1.5deg);
+            }
+        }
+
+        .globo {
+            position: relative;
+            background: #fff;
+            border: 3px solid var(--rosa-fuerte);
+            border-radius: 18px;
+            padding: 12px 16px;
+            margin-top: 8px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 19px;
+            color: var(--tinta);
+            box-shadow: 0 6px 0 rgba(255, 143, 190, .25);
+        }
+
+        .globo::before {
+            content: "";
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-left: 3px solid var(--rosa-fuerte);
+            border-top: 3px solid var(--rosa-fuerte);
+        }
+
+        .nombre-personaje {
+            margin-top: 12px;
+            font-weight: 900;
+            color: var(--rosa-fuerte);
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        /* Pizarra de la "clase" */
+        .pizarra {
+            flex: 1 1 420px;
+            max-width: 620px;
+            background: #3f6b5a;
+            border: 14px solid #c99a6b;
+            border-radius: 14px;
+            box-shadow: 0 18px 40px rgba(107, 74, 110, .3);
+            padding: 26px 26px 20px;
+            position: relative;
+            color: #eafff5;
+            min-height: 380px;
+        }
+
+        .pizarra::after {
+            content: "";
+            position: absolute;
+            bottom: -26px;
+            left: 8%;
+            right: 8%;
+            height: 10px;
+            background: #b07f52;
+            border-radius: 6px;
+        }
+
+        .pizarra h2 {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 26px;
+            border-bottom: 2px dashed rgba(234, 255, 245, .5);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+        }
+
+        .lista-tarea {
+            list-style: none;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 20px;
+            line-height: 1.9;
+        }
+
+        .lista-tarea li::before {
+            content: "✿ ";
+            color: var(--rosa);
+        }
+
+        .chalk-404 {
+            position: absolute;
+            right: 18px;
+            bottom: 30px;
+            font-size: 64px;
+            font-weight: 900;
+            opacity: .18;
+            transform: rotate(-8deg);
+            user-select: none;
+        }
+
+        .notas {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .nota {
+            background: #fff8b8;
+            color: #7a6a1e;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 16px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            transform: rotate(-2deg);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .25);
+            transition: transform .25s ease;
+        }
+
+        .nota:nth-child(2) {
+            background: #ffd6e8;
+            color: #8d3f63;
+            transform: rotate(2deg);
+        }
+
+        .nota:nth-child(3) {
+            background: #d3f1ff;
+            color: #2f6a86;
+            transform: rotate(-1deg);
+        }
+
+        .nota:hover {
+            transform: rotate(0) scale(1.06);
+        }
+
+        /* Botones */
+        .acciones {
+            margin-top: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-weight: 900;
+            font-size: 17px;
+            padding: 13px 26px;
+            border-radius: 999px;
+            border: 3px solid #fff;
+            color: #fff;
+            background: linear-gradient(135deg, var(--rosa-fuerte), var(--lavanda));
+            box-shadow: 0 8px 0 rgba(214, 116, 167, .55), 0 14px 24px rgba(205, 180, 246, .4);
+            cursor: pointer;
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 11px 0 rgba(214, 116, 167, .55), 0 18px 28px rgba(205, 180, 246, .5);
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 3px 0 rgba(214, 116, 167, .55);
+        }
+
+        .btn.secundario {
+            background: linear-gradient(135deg, #7cc7ff, var(--lavanda));
+            box-shadow: 0 8px 0 rgba(97, 158, 209, .5), 0 14px 24px rgba(124, 199, 255, .35);
+        }
+
+        /* ====== Horario escolar ====== */
+        section.horario {
+            position: relative;
+            z-index: 5;
+            max-width: 900px;
+            margin: 50px auto 10px;
+            padding: 0 24px;
+            text-align: center;
+        }
+
+        section.horario h3 {
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        section.horario h3 small {
+            display: block;
+            font-family: 'Patrick Hand', cursive;
+            font-weight: 400;
+            font-size: 17px;
+            color: #9a7a9d;
+        }
+
+        .tabla-envoltura {
+            background: rgba(255, 255, 255, .8);
+            border: 3px solid #fff;
+            border-radius: 22px;
+            box-shadow: 0 12px 30px rgba(255, 183, 213, .4);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 18px;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--rosa-fuerte), var(--lavanda));
+            color: #fff;
+            padding: 12px 8px;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
+        td {
+            padding: 11px 8px;
+            border-bottom: 2px dotted #f0cfe0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #fff0f7;
+        }
+
+        td.hora {
+            font-weight: 700;
+            color: var(--rosa-fuerte);
+            white-space: nowrap;
+        }
+
+        /* ====== Footer ====== */
+        footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 40px 20px 30px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 17px;
+            color: #9a7a9d;
+        }
+
+        footer .corazon {
+            color: var(--rosa-fuerte);
+            animation: latir 1.2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes latir {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(1.3);
+            }
+        }
+
+        /* Contador de clicks del astolfo */
+        .contador-owo {
+            margin-top: 6px;
+            font-size: 15px;
+            opacity: .8;
+        }
+
+        @media (max-width: 640px) {
+            .pizarra {
+                min-height: unset;
+            }
+
+            .chalk-404 {
+                font-size: 44px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Elementos decorativos flotantes -->
+    <div class="floating" style="top:12%; left:6%; font-size:42px;">🎀</div>
+    <div class="floating" style="top:22%; right:7%; font-size:38px; animation-delay:1s;">⭐</div>
+    <div class="floating" style="bottom:18%; left:8%; font-size:36px; animation-delay:.6s;">🍡</div>
+    <div class="floating" style="bottom:24%; right:9%; font-size:40px; animation-delay:1.4s;">☁️</div>
+    <div class="floating" style="top:55%; left:3%; font-size:30px; animation-delay:2s;">🌸</div>
+    <div class="floating" style="top:60%; right:3%; font-size:32px; animation-delay:.3s;">💕</div>
+
+    <header>
+        <div class="badge-clase">✿ ACADEMIA ASTERISK · SALÓN 404 ✿</div>
+        <h1 class="error-code"><span>4</span><span>0</span><span>4</span></h1>
+        <div class="titulo-pagina">¡Kyaa! Esta página se saltó la clase... (。<_°)</div>
+        <p class="subtitulo">
+            Buscaste en todo el instituto y la URL no aparece en el horario.
+            No te preocupes, senpai <b>Astro-chan</b> te acompaña de vuelta al salón principal~ ♪
+        </p>
+    </header>
+
+    <main>
+        <!-- Personaje -->
+        <div class="escena-personaje">
+            <svg class="avatar" id="astro" viewBox="0 0 220 240" role="img" aria-label="Astro-chan, mascota femboy kawaii con uniforme escolar">
+                <defs>
+                    <linearGradient id="pelo" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#ffd1e6" />
+                        <stop offset="100%" stop-color="#c9a6f5" />
+                    </linearGradient>
+                    <linearGradient id="falda" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#8fb8ea" />
+                        <stop offset="100%" stop-color="#6f9fe0" />
+                    </linearGradient>
+                </defs>
+
+                <!-- coletas laterales -->
+                <path d="M38 78 Q14 118 30 158 Q44 140 46 100 Z" fill="url(#pelo)" />
+                <path d="M182 78 Q206 118 190 158 Q176 140 174 100 Z" fill="url(#pelo)" />
+
+                <!-- cuerpo: blazer escolar -->
+                <path d="M70 150 L150 150 L162 226 L58 226 Z" fill="#ffffff" stroke="#e7d3f0" stroke-width="3" />
+                <path d="M96 150 L110 172 L124 150 Z" fill="#fdeef6" />
+                <!-- corbata -->
+                <path d="M110 158 L120 168 L114 208 L110 216 L106 208 L100 168 Z" fill="#ff8fbe" />
+                <path d="M103 165 L117 165 L114 174 L106 174 Z" fill="#ff74ac" />
+                <!-- falda plisada -->
+                <path d="M62 200 L158 200 L170 236 L50 236 Z" fill="url(#falda)" />
+                <path d="M80 202 L76 234 M100 202 L98 234 M120 202 L122 234 M140 202 L144 234" stroke="#5c8ed4"
+                    stroke-width="3" fill="none" opacity=".6" />
+                <!-- rodilleras / calcetines -->
+                <rect x="74" y="230" width="18" height="10" rx="4" fill="#fff" stroke="#e7d3f0" stroke-width="2" />
+                <rect x="128" y="230" width="18" height="10" rx="4" fill="#fff" stroke="#e7d3f0" stroke-width="2" />
+
+                <!-- brazos saludando -->
+                <path d="M70 158 Q46 172 42 196" stroke="#ffdcc8" stroke-width="13" stroke-linecap="round" fill="none" />
+                <circle cx="41" cy="199" r="8" fill="#ffdcc8" />
+                <g id="brazo-saludo">
+                    <path d="M150 158 Q176 140 182 112" stroke="#ffdcc8" stroke-width="13" stroke-linecap="round"
+                        fill="none" />
+                    <circle cx="184" cy="106" r="9" fill="#ffdcc8" />
+                    <animateTransform attributeName="transform" type="rotate" values="-12 150 158; 10 150 158; -12 150 158"
+                        dur="1.4s" repeatCount="indefinite" />
+                </g>
+
+                <!-- cabeza -->
+                <circle cx="110" cy="92" r="56" fill="#ffe8d8" stroke="#f5cdb4" stroke-width="2" />
+
+                <!-- flequillo -->
+                <path d="M54 92 Q52 34 110 30 Q168 34 166 92 Q158 60 140 58 Q146 76 136 78 Q132 56 112 54 Q118 74 106 76
+                         Q102 54 84 58 Q90 76 78 78 Q72 60 62 66 Q56 74 54 92 Z" fill="url(#pelo)" />
+
+                <!-- diadema con moño -->
+                <path d="M62 58 Q110 40 158 58" stroke="#ff8fbe" stroke-width="7" fill="none" stroke-linecap="round" />
+                <path d="M110 40 L96 26 Q108 20 114 32 Q120 20 132 26 Z" fill="#ff74ac" />
+                <circle cx="113" cy="31" r="5" fill="#ffd1e6" />
+
+                <!-- orejas de gato (¡kawaii extra!) -->
+                <path d="M64 44 L58 20 L82 34 Z" fill="url(#pelo)" stroke="#e0b8ec" stroke-width="2" />
+                <path d="M156 44 L162 20 L138 34 Z" fill="url(#pelo)" stroke="#e0b8ec" stroke-width="2" />
+
+                <!-- ojos brillantes -->
+                <g id="ojos">
+                    <ellipse cx="88" cy="96" rx="10" ry="13" fill="#6b4a6e" />
+                    <ellipse cx="132" cy="96" rx="10" ry="13" fill="#6b4a6e" />
+                    <circle cx="85" cy="91" r="4" fill="#fff" />
+                    <circle cx="129" cy="91" r="4" fill="#fff" />
+                    <circle cx="91" cy="101" r="2" fill="#ffd1e6" />
+                    <circle cx="135" cy="101" r="2" fill="#ffd1e6" />
+                </g>
+                <!-- pestañas -->
+                <path d="M76 82 Q88 76 100 82 M120 82 Q132 76 144 82" stroke="#6b4a6e" stroke-width="3" fill="none"
+                    stroke-linecap="round" />
+
+                <!-- rubor -->
+                <ellipse cx="70" cy="112" rx="10" ry="6" fill="#ffb0cf" opacity=".8" />
+                <ellipse cx="150" cy="112" rx="10" ry="6" fill="#ffb0cf" opacity=".8" />
+
+                <!-- boquita :3 -->
+                <path id="boca" d="M100 118 Q105 124 110 118 Q115 124 120 118" stroke="#d8688f" stroke-width="3"
+                    fill="none" stroke-linecap="round" />
+            </svg>
+
+            <div class="globo" id="mensaje-astro">¡Konnichiwa~! ¿Perdiste tu página? Astolfo dice que uwu, no pasa nada ♡</div>
+            <div class="nombre-personaje">★ ASTRO-CHAN · delegada de clase ★</div>
+
+            <div class="acciones">
+                <a class="btn" href="index.html">🏠 Volver al inicio</a>
+                <button class="btn secundario" id="btn-acariciar" type="button">🐾 Acariciar a Astro-chan</button>
+            </div>
+        </div>
+
+        <!-- Pizarra -->
+        <div class="pizarra">
+            <h2>📋 Aviso del salón 4-0-4</h2>
+            <ul class="lista-tarea">
+                <li>La ruta solicitada se fue a comprar pan al supermercado (cliché anime).</li>
+                <li>Revisa que la URL no tenga erratas, ¡los sensei no perdonan!</li>
+                <li>Puede que la página esté retenida después de clases.</li>
+                <li>Si nada funciona: vuelve al inicio y pide disculpas con un melon pan. 🍈</li>
+            </ul>
+            <div class="notas">
+                <div class="nota">☆ Nota de hoy: 4/0/4 ... ¡no existe!</div>
+                <div class="nota">Club de astronomía: reunión tras clases ♪</div>
+                <div class="nota">No olvidar: bento + leche con fresa 🥛</div>
+            </div>
+            <div class="chalk-404">404</div>
+        </div>
+    </main>
+
+    <!-- Horario escolar -->
+    <section class="horario">
+        <h3>🗓️ Horario para encontrar la página perdida
+            <small>(clases de recuperación incluidas, senpai)</small>
+        </h3>
+        <div class="tabla-envoltura">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Materia</th>
+                        <th>Profesora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="hora">08:00</td>
+                        <td>Saludo kawaii & owu básico (。<_°)</td>
+                        <td>Sensei Rosa</td>
+                    </tr>
+                    <tr>
+                        <td class="hora">09:30</td>
+                        <td>Matemáticas: dividir 404 entre las ganas de estudiar</td>
+                        <td>Sensei Lavanda</td>
+                    </tr>
+                    <tr>
+                        <td class="hora">11:00</td>
+                        <td>Costura del uniforme: pliegues de falda perfectos</td>
+                        <td>Sensei Melocotón</td>
+                    </tr>
+                    <tr>
+                        <td class="hora">12:30</td>
+                        <td>Almuerzo en la azotea ☁️ (buscando páginas perdidas)</td>
+                        <td>Todas</td>
+                    </tr>
+                    <tr>
+                        <td class="hora">14:00</td>
+                        <td>Informatika aplicada: depurar errores 4xx</td>
+                        <td>Sempai Astro</td>
+                    </tr>
+                    <tr>
+                        <td class="hora">15:30</td>
+                        <td>Club de búsqueda de URLs extraviadas 🔎</td>
+                        <td>Astro-chan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer>
+        Academia Asterisk · Salón 404 — hecho con <span class="corazon">♡</span> y mucho uwu
+        <div class="contador-owo" id="contador">Acaricias hoy: 0 uwu</div>
+    </footer>
+
+    <script>
+        // ---- pétalos de sakura cayendo ----
+        (function crearPetalo() {
+            const petalo = document.createElement('div');
+            petalo.className = 'sakura';
+            petalo.textContent = ['🌸', '💮', '🎀', '✨'][Math.floor(Math.random() * 4)];
+            petalo.style.left = Math.random() * 100 + 'vw';
+            petalo.style.fontSize = (12 + Math.random() * 16) + 'px';
+            const dur = 6 + Math.random() * 7;
+            petalo.style.animationDuration = dur + 's';
+            document.body.appendChild(petalo);
+            setTimeout(() => petalo.remove(), dur * 1000);
+        });
+        setInterval(() => {
+            const petalo = document.createElement('div');
+            petalo.className = 'sakura';
+            petalo.textContent = ['🌸', '💮', '🎀', '✨'][Math.floor(Math.random() * 4)];
+            petalo.style.left = Math.random() * 100 + 'vw';
+            petalo.style.fontSize = (12 + Math.random() * 16) + 'px';
+            const dur = 6 + Math.random() * 7;
+            petalo.style.animationDuration = dur + 's';
+            document.body.appendChild(petalo);
+            setTimeout(() => petalo.remove(), dur * 1000);
+        }, 900);
+
+        // ---- mensajes aleatorios de Astro-chan ----
+        const mensajes = [
+            '¡Konnichiwa~! ¿Perdiste tu página? Astolfo dice que uwu, no pasa nada ♡',
+            '¿404? Eso solo significa 4 tartas y 4 fresas... ¡delicioso! 🍓',
+            'Se te cayó la página... ¡te lo devolveré con intereses kawaii!',
+            'UwU esta dirección está en detención disciplinaria, lo siento~',
+            '¡Ganbare, senpai! Recarga con confianza, yo te cubro la espalda 💪🎀',
+            'N-nota: no estoy mirando, solo... ¿qué haces en mi pasillo? (⁄ ⁄>⁄ ▽ ⁄<⁄⁄)',
+        ];
+        const globo = document.getElementById('mensaje-astro');
+        let idxMsg = 0;
+        setInterval(() => {
+            idxMsg = (idxMsg + 1) % mensajes.length;
+            globo.style.opacity = 0;
+            setTimeout(() => {
+                globo.textContent = mensajes[idxMsg];
+                globo.style.transition = 'opacity .4s';
+                globo.style.opacity = 1;
+            }, 400);
+        }, 6000);
+
+        // ---- botón de acariciar ----
+        let caricias = parseInt(localStorage.getItem('caricias-astro') || '0', 10);
+        const contador = document.getElementById('contador');
+        function pintarContador() {
+            contador.textContent = `Acaricias hoy: ${caricias} uwu` + (caricias >= 10 ? ' ¡Astro-chan es feliz!! 💞' : '');
+        }
+        pintarContador();
+        document.getElementById('btn-acariciar').addEventListener('click', () => {
+            caricias++;
+            localStorage.setItem('caricias-astro', caricias);
+            pintarContador();
+            globo.textContent = '¡Fufu~ eso hace cosquillas! ≧◡≦';
+            // corazondito volador
+            const corazon = document.createElement('div');
+            corazon.textContent = '💗';
+            corazon.style.cssText = 'position:fixed;z-index:99;font-size:28px;pointer-events:none;transition:all 1.2s ease-out;opacity:1;';
+            const avatar = document.getElementById('astro').getBoundingClientRect();
+            corazon.style.left = (avatar.left + avatar.width / 2) + 'px';
+            corazon.style.top = (avatar.top + 40) + 'px';
+            document.body.appendChild(corazon);
+            requestAnimationFrame(() => {
+                corazon.style.transform = `translate(${(Math.random() - .5) * 160}px, -120px) scale(1.6)`;
+                corazon.style.opacity = 0;
+            });
+            setTimeout(() => corazon.remove(), 1300);
+        });
+    </script>
+</body>
+
+</html>
